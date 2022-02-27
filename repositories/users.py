@@ -31,7 +31,6 @@ class UserRepository(BaseRepository):
 
         values = {**user.dict()}
         values.pop("id", None)
-
         query = users.insert().values(**values)
         user.id = await self.database.execute(query)
         return user

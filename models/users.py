@@ -24,3 +24,11 @@ class UserInput(BaseModel):
         if 'password' in values and v != values["password"]:
             raise ValueError("Password don`t match")
         return v
+
+
+class UserResponse(BaseModel):
+    id: str
+    name: str
+    email: EmailStr
+    created_at: datetime.datetime
+    updated_at: datetime.datetime
