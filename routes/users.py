@@ -2,7 +2,7 @@ from typing import List
 
 from fastapi import APIRouter, Depends
 
-from models.users import User, UserInput, UserResponse
+from models.users import User, UserCreate, UserUpdate, UserResponse
 from repositories.users import UserRepository
 from .depends import get_user_repository
 
@@ -19,11 +19,11 @@ async def read_users(
 
 @router.post("/", response_model=UserResponse)
 async def create(
-        user: UserInput,
+        user: UserCreate,
         users: UserRepository = Depends(get_user_repository)):
     return await users.create(u=user)
 
 
 @router.put("/", response_model=UserResponse)
-async def update_user(id: int, user: UserInput, users: UserRepository = Depends(get_user_repository)):
+async def update_user(id: int, user: UserUpdate, users: UserRepository = Depends(get_user_repository)):
     return await users.update(id=id, u=user)

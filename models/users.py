@@ -8,11 +8,12 @@ class User(BaseModel):
     name: str
     email: EmailStr
     hashed_password: str
+    is_company: bool
     created_at: datetime.datetime
     updated_at: datetime.datetime
 
 
-class UserInput(BaseModel):
+class UserCreate(BaseModel):
     name: str
     email: EmailStr
     password: constr(min_length=8)
@@ -26,9 +27,17 @@ class UserInput(BaseModel):
         return v
 
 
+class UserUpdate(BaseModel):
+    name: str
+    email: EmailStr
+    password: constr(min_length=8)
+    is_company: bool = False
+
+
 class UserResponse(BaseModel):
     id: str
     name: str
     email: EmailStr
+    is_company: bool
     created_at: datetime.datetime
     updated_at: datetime.datetime

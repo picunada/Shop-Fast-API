@@ -1,13 +1,14 @@
 import uvicorn
 from fastapi import FastAPI
 
-from routes import users
+from routes import users, auth
 from db.connect import database
 
 
 app = FastAPI(title="Shop API")
 
 app.include_router(users.router, prefix="/users", tags=["users"])
+app.include_router(auth.router, prefix="/auht", tags=["auth"])
 
 @app.get("/")
 async def root():
