@@ -11,7 +11,7 @@ def get_user_repository() -> UserRepository:
 
 async def get_current_user(
         users: UserRepository = Depends(get_user_repository),
-        token: str = Depends(JWTBearer),
+        token: str = Depends(JWTBearer()),
 ) -> User:
     cred_exception = HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Credentials are not valid")
     payload = decode_access_token(token)
@@ -24,5 +24,5 @@ async def get_current_user(
 
     user = await users.get_by_email(email=email)
     if user is None:
-        return cred_exception
+        raise cred_exception
     return user

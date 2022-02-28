@@ -1,8 +1,10 @@
-from typing import List
+from typing import List, Dict, Union
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from models.users import User, UserCreate, UserUpdate, UserResponse
+from core.security import create_access_token
+from models.token import Token
+from models.users import User, UserCreate, UserUpdate, UserResponse, UserCreateResponse
 from repositories.users import UserRepository
 from .depends import get_user_repository, get_current_user
 
@@ -17,18 +19,26 @@ async def read_users(
     return await users.get_all(limit=limit, skip=0)
 
 
-@router.post("/", response_model=UserResponse)
+@router.post("/", response_model=UserCreateResponse)
 async def create(
         user: UserCreate,
         users: UserRepository = Depends(get_user_repository)):
-    return await users.create(u=user)
+    existing_user = await users.get_by_email(user.email)
+    if existing_user is not None:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email already exists")
+    token = Token(
+        access_token=create_access_token({"sub": user.email}),
+        token_type="Bearer"
+    )
+    response = {"user": await users.create(u=user), "token": token}
+    return response
 
 
-@router.put("/", response_model=UserResponse)
+@router.patch("/", response_model=UserResponse)
 async def update_user(id: int, user: UserUpdate,
                       users: UserRepository = Depends(get_user_repository),
                       current_user: User = Depends(get_current_user)):
-    user = await users.get_by_id(id=id)
-    if user is None or user.email != current_user.email:
+    requested_user = await users.get_by_id(id=id)
+    if requested_user is None or requested_user.email != current_user.email:
         return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
     return await users.update(id=id, u=user)

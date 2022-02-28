@@ -11,6 +11,8 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 def hash_password(password: str) -> str:
+    if password is None:
+        return
     return pwd_context.hash(password)
 
 
@@ -27,7 +29,7 @@ def create_access_token(data: dict) -> str:
 
 def decode_access_token(token: str):
     try:
-        encoded_jwt = jwt.decode(token, settings.secret_key, algorithms=settings.algorithm)
+        encoded_jwt = jwt.decode(token, settings.secret_key, algorithms=[settings.algorithm])
     except jwt.JWSError:
         return None
     return encoded_jwt

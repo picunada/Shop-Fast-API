@@ -1,5 +1,5 @@
 import datetime
-from typing import List, Optional, Mapping
+from typing import List, Optional
 
 from core.security import hash_password
 from db.users import users
@@ -49,6 +49,8 @@ class UserRepository(BaseRepository):
         values = {**user.dict()}
         values.pop("created_at", None)
         values.pop("id", None)
+        if u.password is None:
+            values.pop("hashed_password")
         query = users.update().where(users.c.id == id).values(**values)
         await self.database.execute(query)
         return user

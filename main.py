@@ -8,7 +8,7 @@ from db.connect import database
 app = FastAPI(title="Shop API")
 
 app.include_router(users.router, prefix="/users", tags=["users"])
-app.include_router(auth.router, prefix="/auht", tags=["auth"])
+app.include_router(auth.router, prefix="/auth", tags=["auth"])
 
 @app.get("/")
 async def root():
