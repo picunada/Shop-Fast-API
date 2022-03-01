@@ -43,14 +43,12 @@ class UserRepository(BaseRepository):
             hashed_password=hash_password(u.password),
             is_company=u.is_company,
             created_at=datetime.datetime.utcnow(),
-            updated_at=datetime.datetime.utcnow(),
+            updated_at=datetime.datetime.utcnow()
         )
 
         values = {**user.dict()}
         values.pop("created_at", None)
         values.pop("id", None)
-        if u.password is None:
-            values.pop("hashed_password")
         query = users.update().where(users.c.id == id).values(**values)
         await self.database.execute(query)
         return user

@@ -2,7 +2,7 @@ import sqlalchemy
 from .connect import metadata
 import datetime
 
-item = sqlalchemy.Table(
+items = sqlalchemy.Table(
     "item",
     metadata,
     sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True, autoincrement=True, unique=True),
