@@ -1,4 +1,6 @@
 from fastapi import Depends, HTTPException, status
+
+from repositories.items import ItemsRepository
 from repositories.users import UserRepository
 from db.connect import database
 from core.security import JWTBearer, decode_access_token
@@ -7,6 +9,10 @@ from models.users import User
 
 def get_user_repository() -> UserRepository:
     return UserRepository(database)
+
+
+def get_items_repository() -> ItemsRepository:
+    return ItemsRepository(database)
 
 
 async def get_current_user(

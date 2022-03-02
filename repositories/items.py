@@ -1,12 +1,8 @@
 import datetime
 from typing import List, Optional
 
-from fastapi import Depends
-
 from db.item import items
 from models.items import Item, ItemCreate, ItemUpdate
-from models.users import User
-from routes.depends import get_current_user
 from .base import BaseRepository
 
 
@@ -28,14 +24,17 @@ class ItemsRepository(BaseRepository):
             name=i.name,
             price=i.price,
             description=i.description,
+            quantity=i.quantity,
             is_in_stock=is_in_stock,
             created_at=datetime.datetime.utcnow(),
             updated_at=datetime.datetime.utcnow()
         )
-
+        print("======================================================================================")
         values = {**item.dict()}
         values.pop("id", None)
+        print(values)
         query = items.insert().values(**values)
+        print(query)
         item.id = await self.database.execute(query=query)
         return item
 

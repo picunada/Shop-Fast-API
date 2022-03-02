@@ -9,20 +9,21 @@ class Item(BaseModel):
     name: str
     price: int
     description: str
+    quantity: int
     is_in_stock: bool = True
     created_at: datetime.datetime
     updated_at: datetime.datetime
 
 
 class ItemCreate(BaseModel):
-    name: str(max_length=20)
+    name: str
     price: int
-    description: str(max_length=256)
-    items_in_stock: int
+    description: str
+    quantity: int
 
 
 class ItemUpdate(BaseModel):
-    name: str(max_length=20)
+    name: str
     price: int
-    description: str(max_length=256)
-    items_in_stock: int
+    description: str
+    quantity: int
