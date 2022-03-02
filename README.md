@@ -17,6 +17,11 @@ SECRET_KEY="5bac952dcb9141b478ce26b978b7ab8364237135ed64399e7107676fd53e49f8"
 ```
 В UNIX системах для запуска выполнить команды:
 ```
+# Создаём окружение 
+python3 -m venv venv
+
+source venv/bin/activate
+
 # Установить зависимости
 pip install -r requirements.txt
 
