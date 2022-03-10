@@ -6,7 +6,7 @@ from models.token import Token
 
 
 class User(BaseModel):
-    id: Optional[str] = None
+    id: Optional[int] = None
     name: str
     email: EmailStr
     hashed_password: Optional[str]
@@ -37,7 +37,7 @@ class UserUpdate(BaseModel):
 
 
 class UserResponse(BaseModel):
-    id: str
+    id: int
     name: str
     email: EmailStr
     is_company: bool

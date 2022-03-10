@@ -31,7 +31,7 @@ async def get_item_by_id(id: int,
 async def create_item(item: ItemCreate,
                       items: ItemsRepository = Depends(get_items_repository),
                       current_user: User = Depends(get_current_user)):
-    return await items.create(item, current_user.id, is_in_stock(item.quantity))
+    return await items.create(item, current_user.id, is_in_stock(item.in_stock))
 
 
 @router.patch("/{id}", response_model=Item)
@@ -42,4 +42,4 @@ async def update_item(id: int,
     requested_item = await items.get_by_id(id)
     if requested_item is None or requested_item.user_id != current_user.id:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
-    return await items.update(id, current_user.id, item, is_in_stock(item.quantity))
+    return await items.update(id, current_user.id, item, is_in_stock(item.in_stock))

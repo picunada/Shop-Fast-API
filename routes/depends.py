@@ -1,5 +1,6 @@
 from fastapi import Depends, HTTPException, status
 
+from repositories.cart import CartRepository
 from repositories.items import ItemsRepository
 from repositories.users import UserRepository
 from db.connect import database
@@ -13,6 +14,10 @@ def get_user_repository() -> UserRepository:
 
 def get_items_repository() -> ItemsRepository:
     return ItemsRepository(database)
+
+
+def get_cart_repository() -> CartRepository:
+    return CartRepository(database)
 
 
 async def get_current_user(

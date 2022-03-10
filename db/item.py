@@ -10,7 +10,7 @@ items = sqlalchemy.Table(
     sqlalchemy.Column("name", sqlalchemy.String, nullable=False),
     sqlalchemy.Column("price", sqlalchemy.Numeric, nullable=False),
     sqlalchemy.Column("description", sqlalchemy.String),
-    sqlalchemy.Column("quantity", sqlalchemy.Integer, nullable=False),
+    sqlalchemy.Column("in_stock", sqlalchemy.Integer, nullable=False),
     sqlalchemy.Column("is_in_stock", sqlalchemy.Boolean, default=True),
     sqlalchemy.Column("created_at", sqlalchemy.DateTime, default=datetime.datetime.utcnow()),
     sqlalchemy.Column("updated_at", sqlalchemy.DateTime, default=datetime.datetime.utcnow()),

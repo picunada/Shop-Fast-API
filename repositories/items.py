@@ -24,12 +24,11 @@ class ItemsRepository(BaseRepository):
             name=i.name,
             price=i.price,
             description=i.description,
-            quantity=i.quantity,
+            in_stock=i.in_stock,
             is_in_stock=is_in_stock,
             created_at=datetime.datetime.utcnow(),
             updated_at=datetime.datetime.utcnow()
         )
-        print("======================================================================================")
         values = {**item.dict()}
         values.pop("id", None)
         print(values)
@@ -44,6 +43,7 @@ class ItemsRepository(BaseRepository):
             name=i.name,
             price=i.price,
             description=i.description,
+            in_stock=i.in_stock,
             is_in_stock=is_in_stock,
             created_at=datetime.datetime.utcnow(),
             updated_at=datetime.datetime.utcnow()
