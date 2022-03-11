@@ -38,11 +38,20 @@ async def create(
     return response
 
 
-@router.patch("/", response_model=UserResponse)
+@router.patch("/", response_model=UserCreateResponse)
 async def update_user(id: int, user: UserUpdate,
                       users: UserRepository = Depends(get_user_repository),
                       current_user: User = Depends(get_current_user)):
+    existing_user = await users.get_by_email(user.email)
+    if existing_user is not None:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email already exists")
     requested_user = await users.get_by_id(id=id)
     if requested_user is None or requested_user.email != current_user.email:
         return HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
-    return await users.update(id=id, u=user)
+    token = Token(
+        access_token=create_access_token({"sub": user.email}),
+        token_type="Bearer"
+    )
+    updated_user = await users.update(id=id, u=user)
+    response = {"user": updated_user, "token": token}
+    return response
