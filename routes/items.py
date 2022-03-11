@@ -13,9 +13,9 @@ router = APIRouter()
 
 @router.get("/", response_model=List[Item])
 async def read_items(items: ItemsRepository = Depends(get_items_repository),
-                        limit: int = 25,
-                        skip: int = 0):
-    return await items.get_all(limit=limit, skip=0)
+                     limit: int = 25,
+                     skip: int = 0):
+    return await items.get_all(limit=limit, skip=skip)
 
 
 @router.get("/{id}", response_model=Item)

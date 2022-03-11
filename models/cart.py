@@ -1,7 +1,7 @@
 import datetime
-from typing import Optional, List, Dict
+from typing import Optional, List
 from pydantic import BaseModel
-from .items import Item, ItemUpdate, ItemInCart
+from .items import ItemInCart
 
 
 class Cart(BaseModel):
@@ -19,4 +19,3 @@ class CartResponse(BaseModel):
     user_id: int
     items: Optional[List[ItemInCart]]
     updated_at: datetime.datetime
-

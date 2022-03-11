@@ -58,4 +58,3 @@ class ItemsRepository(BaseRepository):
     async def delete(self, id: int):
         query = items.delete().where(items.c.id == id)
         return await self.database.execute(query=query)
-

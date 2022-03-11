@@ -17,7 +17,7 @@ async def read_users(
         users: UserRepository = Depends(get_user_repository),
         limit: int = 100,
         skip: int = 0):
-    return await users.get_all(limit=limit, skip=0)
+    return await users.get_all(limit=limit, skip=skip)
 
 
 @router.post("/", response_model=UserCreateResponse)
