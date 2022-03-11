@@ -10,7 +10,7 @@
 а так же .env файл с полями:
 ```
 # Ссылка на базу данных которая развернется в docker контейнере из compose файла
-DATABASE_URL="postgresql://root:root@localhost:32700/{Название базы данных}"
+DATABASE_URL="postgresql://root:root@db:5432/{Название базы данных}"
 
 # Генерится командой: openssl rand -hex 32
 SECRET_KEY="5bac952dcb9141b478ce26b978b7ab8364237135ed64399e7107676fd53e49f8"
